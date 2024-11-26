@@ -6,12 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "biome check src --fix --unsafe",
+    "typecheck": "tsc --noEmit",
+    "check": "pnpm format && pnpm typecheck"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "geist": "^1.3.1",
     "lucide-react": "^0.461.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
@@ -20,6 +23,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -6,7 +6,6 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import type { z } from "zod"
 
-import { PasswordInput } from "@/components/password-input"
 import { Button } from "@/components/ui/button"
 import {
   Form,

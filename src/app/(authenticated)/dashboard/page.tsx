@@ -1,38 +1,12 @@
-import { auth } from "@/lib/auth"
-import { headers } from "next/headers"
-import { redirect } from "next/navigation"
-
-export default async function Page() {
-  const [session, organization, listOrganizations] = await Promise.all([
-    auth.api.getSession({
-      headers: await headers(),
-    }),
-    auth.api.getFullOrganization({
-      headers: await headers(),
-    }),
-    auth.api.listOrganizations({
-      headers: await headers(),
-    }),
-  ])
-
-  if (!session) {
-    throw redirect("/login")
-  }
-
-  if (!listOrganizations.length) {
-    throw redirect("/onboarding")
-  }
-
-  if (!session.session.activeOrganizationId) {
-    await auth.api.setActiveOrganization({
-      headers: await headers(),
-      body: {
-        organizationId: listOrganizations[0].id,
-      },
-    })
-  }
-
-  console.log({ organization })
-
-  return <div>{JSON.stringify(session)}</div>
+export default function Page() {
+  return (
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+        <div className="aspect-video rounded-xl bg-muted/50" />
+        <div className="aspect-video rounded-xl bg-muted/50" />
+        <div className="aspect-video rounded-xl bg-muted/50" />
+      </div>
+      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+    </div>
+  )
 }

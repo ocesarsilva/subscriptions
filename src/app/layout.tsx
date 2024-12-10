@@ -5,6 +5,7 @@ import "@/styles/globals.css"
 import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
 
+import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   )

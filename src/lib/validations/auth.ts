@@ -1,5 +1,4 @@
 import * as z from "zod"
-import { auth } from "../auth"
 
 export const authSchema = z.object({
   email: z.string().email({

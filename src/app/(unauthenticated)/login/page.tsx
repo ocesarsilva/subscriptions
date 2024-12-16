@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { GalleryVerticalEnd } from "lucide-react"
 
 import { OAuthSignIn } from "@/app/(unauthenticated)/_components/oauth-signin"
 import { SignInForm } from "@/app/(unauthenticated)/_components/signin-form"

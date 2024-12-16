@@ -29,7 +29,7 @@ export default async function Layout({ children }: React.PropsWithChildren) {
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar session={session} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">

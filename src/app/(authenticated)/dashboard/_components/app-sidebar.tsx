@@ -16,59 +16,66 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import type { Session } from "@/types"
+import { useSelectedLayoutSegments } from "next/navigation"
 import { NavMarketing } from "./nav-marketing"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatar.jpg",
-  },
-  navMain: [
-    {
-      title: "Início",
-      url: "#",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Dinheiro",
-      url: "#",
-      icon: HandCoins,
-    },
-    {
-      title: "Membros",
-      url: "#",
-      icon: Users,
-    },
-  ],
-  navMarketing: [
-    {
-      title: "Design",
-      url: "#",
-      icon: Home,
-    },
-    {
-      title: "Afiliados",
-      url: "#",
-      icon: HandCoins,
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Suporte",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  session: Session
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ session, ...props }: AppSidebarProps) {
+  const segments = useSelectedLayoutSegments()
+
+  const data = {
+    navMain: [
+      {
+        title: "Início",
+        url: "#",
+        icon: Home,
+        isActive: segments.length === 0,
+      },
+      {
+        title: "Dinheiro",
+        url: "/money",
+        icon: HandCoins,
+        isActive: segments.includes("money"),
+      },
+      {
+        title: "Membros",
+        url: "/members",
+        icon: Users,
+        isActive: segments.includes("members"),
+      },
+    ],
+    navMarketing: [
+      {
+        title: "Design",
+        url: "/design",
+        icon: Home,
+        isActive: segments.includes("design"),
+      },
+      {
+        title: "Afiliados",
+        url: "/affiliate",
+        icon: HandCoins,
+        isActive: segments.includes("affiliates"),
+      },
+    ],
+    navSecondary: [
+      {
+        title: "Suporte",
+        url: "#",
+        icon: LifeBuoy,
+      },
+      {
+        title: "Feedback",
+        url: "#",
+        icon: Send,
+      },
+    ],
+  }
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -95,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser session={session} />
       </SidebarFooter>
     </Sidebar>
   )

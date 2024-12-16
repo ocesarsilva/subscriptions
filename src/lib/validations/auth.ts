@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-export const authSchema = z.object({
+export const loginSchema = z.object({
   email: z.string().email({
     message: "Por favor, insira um endereço de e-mail válido",
   }),
@@ -14,7 +14,7 @@ export const authSchema = z.object({
     }),
 })
 
-export const signUpSchema = authSchema.extend({
+export const registerSchema = loginSchema.extend({
   fullName: z
     .string()
     .min(4, { message: "O nome é obrigatório" })
@@ -24,13 +24,13 @@ export const signUpSchema = authSchema.extend({
 })
 
 export const checkEmailSchema = z.object({
-  email: authSchema.shape.email,
+  email: loginSchema.shape.email,
 })
 
 export const resetPasswordSchema = z
   .object({
-    password: authSchema.shape.password,
-    confirmPassword: authSchema.shape.password,
+    password: loginSchema.shape.password,
+    confirmPassword: loginSchema.shape.password,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

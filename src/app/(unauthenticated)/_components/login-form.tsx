@@ -18,19 +18,19 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
-import { authSchema } from "@/lib/validations/auth"
+import { loginSchema } from "@/lib/validations/auth"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
-type Inputs = z.infer<typeof authSchema>
+type Inputs = z.infer<typeof loginSchema>
 
-export function SignInForm() {
+export function LoginForm() {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
   // react-hook-form
   const form = useForm<Inputs>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",

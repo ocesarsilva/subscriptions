@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card"
 
 import { OAuthSignIn } from "@/app/(unauthenticated)/_components/oauth-signin"
-import { SignInForm } from "@/app/(unauthenticated)/_components/signin-form"
+import { LoginForm } from "@/app/(unauthenticated)/_components/login-form"
 
 export default function LoginPage() {
   return (
@@ -28,7 +28,7 @@ export default function LoginPage() {
                   Ou continue com
                 </span>
               </div>
-              <SignInForm />
+              <LoginForm />
               <div className="text-center text-sm">
                 Não tem uma conta?{" "}
                 <a href="/register" className="underline underline-offset-4">

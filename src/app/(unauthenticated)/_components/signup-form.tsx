@@ -17,13 +17,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signUpSchema } from "@/lib/validations/auth"
+import { registerSchema } from "@/lib/validations/auth"
 
 import { PasswordInput } from "@/components/password-input"
 import { authClient } from "@/lib/auth-client"
 import { Loader2 } from "lucide-react"
 
-type Inputs = z.infer<typeof signUpSchema>
+type Inputs = z.infer<typeof registerSchema>
 
 export function SignUpForm() {
   const router = useRouter()
@@ -31,7 +31,7 @@ export function SignUpForm() {
 
   // react-hook-form
   const form = useForm<Inputs>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -77,7 +77,6 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="email"

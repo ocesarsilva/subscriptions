@@ -15,8 +15,12 @@ export const authSchema = z.object({
 })
 
 export const signUpSchema = authSchema.extend({
-  firstName: z.string().min(4, { message: "O nome é obrigatório" }),
-  lastName: z.string().min(4, { message: "O sobrenome é obrigatório" }),
+  fullName: z
+    .string()
+    .min(4, { message: "O nome é obrigatório" })
+    .refine((value) => value.trim().includes(" "), {
+      message: "Por favor, insira seu nome completo",
+    }),
 })
 
 export const checkEmailSchema = z.object({

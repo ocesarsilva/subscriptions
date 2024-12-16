@@ -35,8 +35,7 @@ export function SignUpForm() {
     defaultValues: {
       email: "",
       password: "",
-      firstName: "",
-      lastName: "",
+      fullName: "",
     },
   })
 
@@ -45,7 +44,7 @@ export function SignUpForm() {
 
     try {
       const { data, error } = await authClient.signUp.email({
-        name: `${inputs.firstName} ${inputs.lastName}`,
+        name: inputs.fullName,
         email: inputs.email,
         password: inputs.password,
       })
@@ -65,34 +64,20 @@ export function SignUpForm() {
   return (
     <Form {...form}>
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input placeholder="Rodney" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Sobrenome</FormLabel>
-                <FormControl>
-                  <Input placeholder="Mullen" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nome Completo</FormLabel>
+              <FormControl>
+                <Input placeholder="John Doe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="email"

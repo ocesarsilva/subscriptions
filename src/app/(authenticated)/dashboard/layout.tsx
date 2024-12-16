@@ -6,10 +6,8 @@ import { AppSidebar } from "@/app/(authenticated)/dashboard/_components/app-side
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -17,6 +15,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { db } from "@/db"
 
 export default async function Layout({ children }: React.PropsWithChildren) {
   const session = await auth.api.getSession({
@@ -27,9 +26,17 @@ export default async function Layout({ children }: React.PropsWithChildren) {
     throw redirect("/login")
   }
 
+  const organization = await db.query.organizations.findFirst({
+    where: (table, { eq }) => eq(table.userId, session.user.id),
+  })
+
+  if (!organization) {
+    throw redirect("/onboarding")
+  }
+
   return (
     <SidebarProvider>
-      <AppSidebar session={session} />
+      <AppSidebar session={session} organization={organization} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
@@ -38,13 +45,7 @@ export default async function Layout({ children }: React.PropsWithChildren) {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  <BreadcrumbPage>Inicío</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

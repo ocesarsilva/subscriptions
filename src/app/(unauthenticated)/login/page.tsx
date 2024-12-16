@@ -6,8 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import { OAuthSignIn } from "@/app/(unauthenticated)/_components/oauth-signin"
 import { LoginForm } from "@/app/(unauthenticated)/_components/login-form"
+import { OAuthSignIn } from "@/app/(unauthenticated)/_components/oauth-signin"
 
 export default function LoginPage() {
   return (

@@ -1,6 +1,5 @@
 import { env } from "@/env.js"
 import type { Metadata } from "next"
-import Link from "next/link"
 
 import { OAuthSignIn } from "@/app/(unauthenticated)/_components/oauth-signin"
 import { SignUpForm } from "@/app/(unauthenticated)/_components/signup-form"
@@ -21,41 +20,39 @@ export const metadata: Metadata = {
 
 export default function SignUpPage() {
   return (
-    <div className="max-w-md w-full">
+    <div className="flex flex-col gap-6">
       <Card>
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Cadastrar-se</CardTitle>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Cadastrar-se</CardTitle>
           <CardDescription>
-            Escolha o seu método preferido de cadastro
+            Faça cadastro com sua conta Google ou GitHub
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
-          <OAuthSignIn />
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Ou continue com
-              </span>
+        <CardContent>
+          <div>
+            <div className="grid gap-6">
+              <OAuthSignIn />
+              <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+                <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                  Ou continue com
+                </span>
+              </div>
+              <SignUpForm />
+              <div className="text-center text-sm">
+                Já possui uma conta?{" "}
+                <a href="/login" className="underline underline-offset-4">
+                  Entrar
+                </a>
+              </div>
             </div>
           </div>
-          <SignUpForm />
         </CardContent>
-        <CardFooter>
-          <div className="text-sm text-muted-foreground">
-            Já possui uma conta?{" "}
-            <Link
-              aria-label="Entrar"
-              href="/login"
-              className="text-primary underline-offset-4 transition-colors hover:underline"
-            >
-              Entrar
-            </Link>
-          </div>
-        </CardFooter>
       </Card>
+      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
+        Ao clicar em continuar, você concorda com nossos{" "}
+        <a href="/#">Termos de Serviço</a> e{" "}
+        <a href="/#">Política de Privacidade</a>.
+      </div>
     </div>
   )
 }

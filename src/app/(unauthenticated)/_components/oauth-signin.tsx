@@ -53,10 +53,7 @@ export function OAuthSignIn() {
             variant="outline"
             className="w-full bg-background"
             onClick={() => void oauthSignIn(provider.provider)}
-            disabled={
-              // loading !== null
-              true
-            }
+            disabled={true}
           >
             {loading === provider.provider ? (
               <Loader2

@@ -10,6 +10,14 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({ user, url }) => {
+      console.log(
+        "Sending reset password email to",
+        user.email,
+        "with url",
+        url
+      )
+    },
   },
   plugins: [nextCookies()],
 })

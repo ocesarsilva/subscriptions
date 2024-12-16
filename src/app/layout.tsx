@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 import "@/styles/globals.css"
 
 import type { Metadata } from "next"
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Toaster richColors />
       </body>
     </html>
   )

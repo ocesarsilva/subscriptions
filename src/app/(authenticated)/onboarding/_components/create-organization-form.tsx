@@ -1,10 +1,19 @@
 "use client"
 
-import type * as React from "react"
-import type { UseFormReturn } from "react-hook-form"
+import * as React from "react"
 
-import { cn } from "@/lib/utils"
+import { useRouter, useSearchParams } from "next/navigation"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type { z } from "zod"
+
+import { createOrganization } from "@/lib/actions/organization"
+import { createOrganizationSchema } from "@/lib/validations/organization"
+
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -15,27 +24,51 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import type { createOrganizationSchema } from "@/lib/validations/organization"
-import type { z } from "zod"
 
-interface CreateOrganizationFormProps
-  extends Omit<React.ComponentPropsWithRef<"form">, "onSubmit"> {
-  children: React.ReactNode
-  form: UseFormReturn<z.infer<typeof createOrganizationSchema>>
-  onSubmit: (data: z.infer<typeof createOrganizationSchema>) => void
+interface CreateOrganizationFormProps {
+  userId: string
 }
 
 export function CreateOrganizationForm({
-  children,
-  form,
-  onSubmit,
-  className,
+  userId,
   ...props
 }: CreateOrganizationFormProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [isCreatePending, startCreateTransaction] = React.useTransition()
+
+  const form = useForm<z.infer<typeof createOrganizationSchema>>({
+    resolver: zodResolver(createOrganizationSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      slug: "",
+    },
+  })
+
+  function onSubmit(input: z.infer<typeof createOrganizationSchema>) {
+    startCreateTransaction(async () => {
+      const { data, error } = await createOrganization({ ...input, userId })
+
+      if (error) {
+        toast.error(error)
+        return
+      }
+
+      if (data) {
+        const newSearchParams = new URLSearchParams(searchParams)
+        newSearchParams.set("step", "connect")
+        newSearchParams.set("org", data.id)
+        router.push("/dashboard")
+      }
+      form.reset()
+    })
+  }
+
   return (
     <Form {...form}>
       <form
-        className={cn("grid w-full gap-4", className)}
+        className="grid w-full gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
         autoComplete="off"
         {...props}
@@ -65,12 +98,12 @@ export function CreateOrganizationForm({
               <FormLabel>Descrição</FormLabel>
               <FormControl>
                 <div className="flex rounded-lg shadow-sm shadow-black/5">
-                  <span className="-z-10 inline-flex items-center rounded-s-lg border border-input bg-background px-3 text-sm text-muted-foreground">
-                    https://
+                  <span className="-z-10 inline-flex items-center rounded-s-lg border border-input bg-background px-3 text-sm">
+                    subscriptions/
                   </span>
                   <Input
                     className="-ms-px rounded-s-none shadow-none"
-                    placeholder="google.com"
+                    placeholder="acme-co"
                     type="text"
                     {...field}
                   />
@@ -97,7 +130,10 @@ export function CreateOrganizationForm({
           )}
         />
 
-        {children}
+        <Button type="submit" disabled={isCreatePending}>
+          {isCreatePending && <Loader2 className="mr-2 size-4 animate-spin" />}
+          Continuar
+        </Button>
       </form>
     </Form>
   )

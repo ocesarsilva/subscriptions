@@ -16,14 +16,14 @@ export function StepHeader({ title, description }: StepHeaderProps) {
           transition: { duration: 0.4, type: "spring" },
         },
       }}
-      className="w-full space-y-1.5"
+      className="w-full space-y-1.5 text-center"
     >
       <h1 className="text-pretty text-2xl font-bold transition-colors sm:text-3xl">
         {title}
       </h1>
       {description ? (
         <p className="text-pretty text-sm text-muted-foreground transition-colors sm:text-base">
-          Você pode atualizar o nome e a descrição da sua comunidade mais tarde
+          {description}
         </p>
       ) : null}
     </motion.div>

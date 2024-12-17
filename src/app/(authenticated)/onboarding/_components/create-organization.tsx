@@ -27,7 +27,10 @@ export function CreateOrganization({ userId }: CreateStoreProps) {
         animate="show"
         className="flex flex-col space-y-4 rounded-xl bg-background/60 p-8"
       >
-        <StepHeader title="Vamos começar criando sua comunidade" />
+        <StepHeader
+          title="Vamos começar criando sua comunidade"
+          description="Você pode atualizar o nome e a descrição da sua comunidade mais tarde"
+        />
         <motion.div
           variants={{
             hidden: { opacity: 0, x: 100 },
